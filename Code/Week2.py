@@ -106,4 +106,4 @@ def cartesianToSpherical(x, y, z):
 if __name__ == "__main__":
     #unittest.main()
     suite = unittest.TestLoader().loadTestsFromTestCase(codeTester)
-    unittest.TextTestRunner(verbosity=3).run(suite)
+    unittest.TextTestRunner(verbosity=2).run(suite)

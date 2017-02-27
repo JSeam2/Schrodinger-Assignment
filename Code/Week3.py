@@ -2,6 +2,9 @@ from __future__ import print_function
 import numpy as np
 import unittest
 import scipy.constants as c
+from sympy import *
+from math import factorial as ff
+import math
 
 class codeTester(unittest.TestCase):
     def test_qn4(self):
@@ -46,9 +49,7 @@ def fact(n):
 
 
 # Q4
-from sympy import *
-from math import factorial
-import math
+
 def assoc_legendre(m,l):
     def f00(a):
         x = symbols('x')
@@ -58,20 +59,18 @@ def assoc_legendre(m,l):
         else:
             diff_l =  diff((x**2 - 1)**l,x,l)
             #print(type(l))
-            fact_l = factorial(int(l))
+            fact_l = ff(int(l))
             fact_l = 1.0/((fact_l) * (2**l))
             lp = fact_l * diff_l
 
             asslegen = ((1-x**2)**((abs(m))/2)) * (diff(lp,x,abs(m)))
+            print(asslegen)
             return asslegen.evalf(subs={x:math.cos(a)})
             #return diff_l
     return f00
 
 
 # Q5
-from sympy import *
-#from mpmath import *
-#mp.dps = 15
 def assoc_laguerre(p,qmp):
     def f(a):
         x = symbols('x')
@@ -89,6 +88,7 @@ def assoc_laguerre(p,qmp):
 
 
 if __name__ == "__main__":
-    #print(assoc_legendre(1,1)(1))
-    suite = unittest.TestLoader().loadTestsFromTestCase(codeTester)
-    unittest.TextTestRunner(verbosity=2).run(suite)
+    print(assoc_legendre(1,1)(1))
+    print(assoc_legendre(2,3)(1))
+    #suite = unittest.TestLoader().loadTestsFromTestCase(codeTester)
+    #unittest.TextTestRunner(verbosity=2).run(suite)

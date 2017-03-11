@@ -82,13 +82,15 @@ def assoc_laguerre(p,qmp):
             diff_l = eel * y.diff(x, qmp+p)
 
             ass_l = ((-1)**p)*diff_l.diff(x,p)
+            print(ass_l)
             return int(round(ass_l.evalf(subs={x:a}),0))
     return f
 
 
 
 if __name__ == "__main__":
-    print(assoc_legendre(1,1)(1))
-    print(assoc_legendre(2,3)(1))
+    #print(assoc_legendre(1,1)(1))
+    print(assoc_laguerre(3,0)(1))
+    print(assoc_laguerre(3,3)(1))
     #suite = unittest.TestLoader().loadTestsFromTestCase(codeTester)
     #unittest.TextTestRunner(verbosity=2).run(suite)

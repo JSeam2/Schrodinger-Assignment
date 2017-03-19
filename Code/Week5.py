@@ -31,7 +31,7 @@ def degToRad(deg):
     """
     # Convert to float if int
     if type(deg) == int:
-	deg = float(deg)
+        deg = float(deg)
 
     assert type(deg) == float
     return round(deg * 3.14159265359 / 180, 5)
@@ -43,34 +43,36 @@ def radToDeg(rad):
     :param: rad(float): radians
     :output: deg(float): degrees
     """
-	# Convert to float if int
+    # Convert to float if int
     if type(rad) == int:
-	rad = float(rad)
+        rad = float(rad)
 
     assert type(rad) == float
     return round(rad * 180 / 3.14159265359, 5)
 
-# Question 3
 def sphericalToCartesian(r, theta, phi):
-	'''
+    '''
     convert spherical coord to cartesian coord
     :param r: radius
     :param theta: theta angle
     :param phi: phi angle
     :return: (x, y, z) tuple of floats
     '''
-        x = float(r) * np.sin(theta) * np.cos(phi)
-	y = float(r) * np.sin(theta) * np.sin(phi)
-	z = float(r) * np.cos(theta)
+    x = float(r) * np.sin(theta) * np.cos(phi)
+    y = float(r) * np.sin(theta) * np.sin(phi)
+    z = float(r) * np.cos(theta)
 
-	return (round(x, 5), round(y, 5), round(z, 5))
+    return round(x, 5), round(y, 5), round(z, 5)
 
 def cartesianToSpherical(x, y, z):
+    x = float(x)
+    y = float(y)
+    z = float(z)
     r = round(np.sqrt(x ** 2 + y ** 2 + z ** 2), 5)
     theta = round(np.arctan2(y, x), 5)
     phi = round(np.arctan2(np.sqrt(x ** 2 + y ** 2), z), 5)
 
-    return (r, phi, theta)
+    return r, phi, theta
 
 def p00(theta):
     return 1
@@ -91,7 +93,7 @@ def p12(theta):
     return 3*np.sin(theta)*np.cos(theta)
 
 def p13(theta):
-    return 1.5*np.sin(theta)*(5*np.cos(theta)**2-1)
+    return -1.5*np.sin(theta)*(5*np.cos(theta)**2-1)
 
 def p22(theta):
     return 3*np.sin(theta)**2
@@ -100,7 +102,7 @@ def p23(theta):
     return 15*np.sin(theta)**2*np.cos(theta)
 
 def p33(theta):
-    return 15*np.sin(theta)*(1-np.cos(theta)**2)
+    return -15*np.sin(theta)**3
 
 def assoc_legendre(m,l):
     if m==0 and l==0:
@@ -120,11 +122,11 @@ def assoc_legendre(m,l):
     elif m==1 and l==3:
         return p13
     elif m==1 and l==2:
-	return p12
+        return p12
     elif m==0 and l==3:
         return p03
     else:
-	return None
+        return None
 
 def l00(x):
     return 1
@@ -160,7 +162,7 @@ def l22(x):
     return 12*x*x-96*x+144
 
 def l03(x):
-    return -x*x*x+9*x*x-18*x+6
+    return (-x)**3+9*x**2-18*x+6
 
 def l30(x):
     return 6
@@ -176,87 +178,91 @@ def l33(x):
 
 def assoc_laguerre(p,qmp):
     if p==0 and qmp==0:
-	return l00
+        return l00
     elif p==0 and qmp==1:
         return l01
     elif p==0 and qmp==2:
-	return l02
+        return l02
     elif p==0 and qmp==3:
-	return l03
+        return l03
     elif p==1 and qmp==0:
-	return l10
+        return l10
     elif p==1 and qmp==1:
-	return l11
+        return l11
     elif p==1 and qmp==2:
-    	return l12
+        return l12
     elif p==1 and qmp==3:
-	return l13
+        return l13
     elif p==2 and qmp==0:
-	return l20
+        return l20
     elif p==2 and qmp==1:
-	return l21
+        return l21
     elif p==2 and qmp==2:
-	return l22
+        return l22
     elif p==2 and qmp==3:
-	return l23
+        return l23
     elif p==3 and qmp==0:
-	return l30
+        return l30
     elif p==3 and qmp==1:
-	return l31
+        return l31
     elif p==3 and qmp==2:
-	return l32
+        return l32
     elif p==3 and qmp==3:
-	return l33
+        return l33
     else:
-	return None
+        return None
 
 def angular_wave_func(m,l,theta,phi):
     if m >0:
-	eps = (-1)**(m)
+        eps = (-1)**(m)
     else:
-	eps = 1
+        eps = 1
 
-	a = (2*l + 1)/(4*math.pi)
-	cca = ff(l-abs(m))
-	ccb = ff(l+abs(m))
-	b = float(cca)/float(ccb)
-	sqr = math.sqrt(a*b)
-	#print sqr
+    a = (2*l + 1)/(4*np.pi)
+    cca = np.math.factorial(l-abs(m))
+    ccb = np.math.factorial(l+abs(m))
+    b = float(cca)/float(ccb)
+    sqr = np.sqrt(a*b)
+    #print sqr
 
-	expon = math.exp(1j*m*float(phi))
-	#print expon
+    expon = np.exp(1j*m*float(phi))
+    #print expon
 
-	pfunc = assoc_legendre(m,l)
-	y = pfunc(float(theta))
+    pfunc = assoc_legendre(m,l)
+    y = pfunc(float(theta))
 
-	#print(y)
-	final = eps*sqr*expon*y
-	return complex(round(final.real,5), round(final.imag,5))
+    #print(y)
+    final = eps*sqr*expon*y
+    return complex(round(final.real,5), round(final.imag,5))
+
 
 def radial_wave_func(n,l,r):
-    import math
-    from math import factorial as ff
     a = c.physical_constants['Bohr radius'][0]
-    #a = float(r)**(-3/2.0)
-    AA = 2.0 / (n*a)
-    AA = AA**3
-    #print AA
-    B = ff(n-l-1)
-    Ca = 2*n*((ff(n+l))**3)
+    AA = (2.0 / (n*a))**3
+    B = np.math.factorial(n-l-1)
+    Ca = 2.0*n*((np.math.factorial(n+l))**3)
     BB= float(B)/Ca
     #print BB
-    sqre = math.sqrt(AA*BB)
+    sqre = np.sqrt(AA*BB)
     #print sqre
 
-    expp = math.exp(float(-r)/(n*a))
+    expp = np.exp(-float(r)/(n*a))
 
     Lexp = ((2*float(r))/(n*a))**l
 
     pfunc = assoc_laguerre(2*l+1, n-l-1)
-    y = pfunc(((2*r)/(n*r)))
+    y = pfunc(((2*r)/(n*a)))
 
     return round(sqre*expp*Lexp*y / a**(-3.0/2),5)
 
+'''
+a = c.physical_constants["Bohr radius"][0]
+print radial_wave_func(1,0,a) == 0.73576
+print radial_wave_func(2,1,a) == 0.12381
+print radial_wave_func(2,1,2*a) == 0.15019
+print radial_wave_func(3,1,2*a) == 0.08281
+print radial_wave_func(1,0,3*a) == 0.09957
+'''
 
 def hydrogen_wave_func(n, m, l, roa, Nx, Ny, Nz):
     # To find overall wavefunction
@@ -267,22 +273,36 @@ def hydrogen_wave_func(n, m, l, roa, Nx, Ny, Nz):
     a = c.physical_constants['Bohr radius'][0]
 
     # need to make the grid first
-    X, Y, Z = np.ogrid[-roa:roa+1:roa*2/Nx, -roa:roa+1:roa*2/Ny,-roa:roa+1:roa*2/Nz]
+    X = np.linspace(-roa,roa,Nx)
+    Y = np.linspace(-roa,roa,Ny)
+    Z =  np.linspace(-roa,roa,Nz)
 
     xx,yy,zz = np.meshgrid(X,Y,Z)
-    print(xx,yy,zz)
 
     # convert the grid into spherical coordinate 
-    CTOS = np.vectorize(cartesianToSpherical(x,y,z))
+    CTOS = np.vectorize(cartesianToSpherical)
+    r, t, p = CTOS(xx,yy,zz)
 
-    # Sub the coord into the wave equation
-    WF = lambda r,theta,phi: angular_wave_func(m,l,theta,phi) * radial_wave_func(n,l,r)
-    WFabs = lambda r,theta,phi: np.absolute(angular_wave_func(m,l,theta,phi) * radial_wave_func(n,l,r))**2
-    vecWF = np.vectorize(WF)
-    vecWFabs - np.vectorize(WFabs)
+    a = c.physical_constants['Bohr radius'][0]
+    rr = r * a
+
+    Rad = np.vectorize(radial_wave_func)
+    Ang = np.vectorize(angular_wave_func)
+
+    mag = Rad(n,l,rr)* Ang(m,l,t,p)
+    absmag = np.absolute(mag)**2
 
     # return the x,y,z values and magnitude
 
-    return 0
+    return np.round(xx,5), np.round(yy,5), np.round(zz,5), np.round(absmag,5)
 
-print hydrogen_wave_func(2,1,1,8,2,2,2)
+'''
+x,y ,z, mag = hydrogen_wave_func(2,0,0,3,5,4,3)
+#x,y,z,mag= hydrogen_wave_func(2,1,1,5,3,4,2)
+print "x,y,z"
+print x,y,z
+print
+print "mag"
+print mag
+#print hydrogen_wave_func(2,0,0,3,5,4,3) 
+'''

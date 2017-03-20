@@ -1,9 +1,7 @@
-from __future__ import print_function
 import numpy as np
 import unittest
 import scipy.constants as c
-from sympy import *
-from math import factorial as ff
+from sympy import diff, factorial, simplify, symbols, E
 import math
 
 class codeTester(unittest.TestCase):
@@ -12,7 +10,6 @@ class codeTester(unittest.TestCase):
         self.assertEqual(fact(5), 120)
         self.assertEqual(fact(4), 24)
         self.assertEqual(fact(1), 1)
-
     """
     def test_qn5(self):
         self.assertAlmostEqual(assoc_legendre(0,0)(1),1)
@@ -59,12 +56,12 @@ def assoc_legendre(m,l):
         else:
             diff_l =  diff((x**2 - 1)**l,x,l)
             #print(type(l))
-            fact_l = ff(int(l))
+            fact_l = factorial(int(l))
             fact_l = 1.0/((fact_l) * (2**l))
             lp = fact_l * diff_l
 
             asslegen = ((1-x**2)**((abs(m))/2)) * (diff(lp,x,abs(m)))
-            print(asslegen)
+            print asslegen
             return asslegen.evalf(subs={x:math.cos(a)})
             #return diff_l
     return f00
@@ -82,15 +79,15 @@ def assoc_laguerre(p,qmp):
             diff_l = eel * y.diff(x, qmp+p)
 
             ass_l = ((-1)**p)*diff_l.diff(x,p)
-            print(ass_l)
+            #print(ass_l)
             return int(round(ass_l.evalf(subs={x:a}),0))
     return f
 
 
 
 if __name__ == "__main__":
-    #print(assoc_legendre(1,1)(1))
-    print(assoc_laguerre(3,0)(1))
-    print(assoc_laguerre(3,3)(1))
+    print assoc_legendre(1,1)
+    print assoc_laguerre(3,0)
+    print assoc_laguerre(3,3)
     #suite = unittest.TestLoader().loadTestsFromTestCase(codeTester)
     #unittest.TextTestRunner(verbosity=2).run(suite)

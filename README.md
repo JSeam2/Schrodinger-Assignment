@@ -1,2 +1,3 @@
 # Schrodinger-Assignment
-Private Github repository for the Schrodinger Assignment... It went from 0 to 100 way fast. waaay fast
+## 10.011 Introduction to Physical Chemistry @ Singapore University of Technology Design
+Completed Possible Solution for Schrodinger Assignment to plot Hydrogen Wave Functions
